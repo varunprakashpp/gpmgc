@@ -16,7 +16,7 @@
                             data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:1;scaleY:1;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
                             data-speed="700" data-start="1000" data-easing="Power3.easeInOut" data-endspeed="300"
                             style="z-index: 5">Welcome to
-                            <span class="text-color text-shadow"> <br />GPMG College</span>
+                            <span class="text-color text-shadow"> <br />GPMG College1</span>
                             </h2>
                         </div>
                         <img src="img/sections/slider/university_01.jpg" alt="" 
