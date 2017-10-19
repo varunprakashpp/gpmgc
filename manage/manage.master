@@ -1,0 +1,592 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="manage.master.cs" Inherits="manage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<!-------------------------------------------------------------------------------------------------------------------------------------->    
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>GPMGC</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="../design/bootstrap/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
+  <link rel="stylesheet" href="../design/plugins/daterangepicker/daterangepicker.css"/>
+  <link rel="stylesheet" href="../design/plugins/datepicker/datepicker3.css"/>
+  <link rel="stylesheet" href="../design/plugins/iCheck/all.css"/>
+  <link rel="stylesheet" href="../design/plugins/colorpicker/bootstrap-colorpicker.min.css" />
+  <link rel="stylesheet" href="../design/plugins/timepicker/bootstrap-timepicker.min.css"/>
+  <link rel="stylesheet" href="../design/plugins/select2/select2.min.css"/>
+  <link rel="stylesheet" href="../design/dist/css/AdminLTE.min.css"/>
+  <link rel="stylesheet" href="../design/css/custom.css"/>
+  <link rel="stylesheet" href="../design/dist/css/skins/_all-skins.min.css"/>
+  <script src="../design/plugins/jQuery/jquery-2.2.3.min.js"></script> 
+  <script src="../design/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../design/plugins/select2/select2.full.min.js"></script>
+  <script src="../design/plugins/input-mask/jquery.inputmask.js"></script>
+  <script src="../design/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+  <script src="../design/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+  <script src="../design/plugins/daterangepicker/daterangepicker.js"></script> 
+  <script src="../design/plugins/datepicker/bootstrap-datepicker.js"></script> 
+  <script src="../design/plugins/colorpicker/bootstrap-colorpicker.min.js"></script> 
+  <script src="../design/plugins/timepicker/bootstrap-timepicker.min.js"></script> 
+  <script src="../design/plugins/slimScroll/jquery.slimscroll.min.js"></script> 
+  <script src="../design/plugins/iCheck/icheck.min.js"></script> 
+  <script src="../design/plugins/fastclick/fastclick.js"></script> 
+  <script src="../design/dist/js/app.min.js"></script> 
+  <script src="../design/dist/js/demo.js"></script> 
+  <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $(".select2").select2();
+
+            //Datemask dd/mm/yyyy
+            $("#datemask").inputmask("dd/mm/yyyy", { "placeholder": "dd/mm/yyyy" });
+            //Datemask2 mm/dd/yyyy
+            $("#datemask2").inputmask("mm/dd/yyyy", { "placeholder": "mm/dd/yyyy" });
+            //Money Euro
+            $("[data-mask]").inputmask();
+
+            //Date range picker
+            $('#reservation').daterangepicker();
+            //Date range picker with time picker
+            $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' });
+            //Date range as a button
+            $('#daterange-btn').daterangepicker(
+            {
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                startDate: moment().subtract(29, 'days'),
+                endDate: moment()
+            },
+            function (start, end) {
+                $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            }
+        );
+
+            //Date picker
+            $('#datepicker').datepicker({
+                autoclose: true
+            });
+
+            //iCheck for checkbox and radio inputs
+            $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+                checkboxClass: 'icheckbox_minimal-blue',
+                radioClass: 'iradio_minimal-blue'
+            });
+            //Red color scheme for iCheck
+            $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+                checkboxClass: 'icheckbox_minimal-red',
+                radioClass: 'iradio_minimal-red'
+            });
+            //Flat red color scheme for iCheck
+            $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+                checkboxClass: 'icheckbox_flat-green',
+                radioClass: 'iradio_flat-green'
+            });
+
+            //Colorpicker
+            $(".my-colorpicker1").colorpicker();
+            //color picker with addon
+            $(".my-colorpicker2").colorpicker();
+
+            //Timepicker
+            $(".timepicker").timepicker({
+                showInputs: false
+            });
+        });
+    </script>
+
+  <script>
+        $(function () {
+            $(".badans").DataTable();
+        });
+   </script>
+   <link rel="stylesheet" href="../design/plugins/datatables/dataTables.bootstrap.css"/>
+   <script src="../design/plugins/datatables/jquery.dataTables.min.js"></script>
+   <script src="../design/plugins/datatables/dataTables.bootstrap.min.js"></script>
+
+   <script>
+     $(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+      });
+    </script>
+<!-------------------------------------------------------------------------------------------------------------------------------------->
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <%--<form id="form1" runat="server">
+    
+<!---------------------------------------------------------------------------------------------------------------------------------------->   
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+<!---------------------------------------------------------------------------------------------------------------------------------------->
+
+
+    </form>--%>
+
+    <form id="form1" runat="server">
+
+<div class="wrapper">
+
+  <header class="main-header">
+    <!-- Logo -->
+    <a href="dashboard.aspx" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+ GPMGC
+	  
+      <!-- logo for regular state and mobile devices -->
+    
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+
+      <div class="navbar-custom-menu">
+         <ul class="nav navbar-nav">
+         
+          <!-- Notifications: style can be found in dropdown.less -->
+          <%--<li class="dropdown notifications-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-bell-o"></i>
+              <span class="label label-warning">2</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">You have 2 notifications</li>
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class="menu">
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-users text-aqua"></i> 10 Missed Calls
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-warning text-yellow"></i> 5 Reminders
+                    </a>
+                  </li>
+				   
+
+                </ul>
+              </li>
+              <li class="footer"><a href="#">View all</a></li>
+            </ul>
+          </li>--%>
+
+          <%--<li class="dropdown tasks-menu">
+            <a href="changepassword.aspx" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa  fa-key"></i>
+              <span class="label label-danger"></span>
+            </a>
+           
+          </li>--%>
+          
+          <li >
+            <a href="changepassword.aspx" title="Change password">
+              <i class="fa  fa-key"></i>
+              <span class="label label-danger"></span>
+            </a>
+           </li>
+
+          <li class="dropdown user user-menu">
+            <a href="dashboard.aspx" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="../img/fav.png" class="user-image" alt="User Image">
+              <span class="hidden-xs"> GPMGC</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <img src="../img/fav.png" class="img-circle" alt="User Image">
+
+                <p>
+   GPMGC
+                </p>
+              </li>
+             
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <%--<a href="#" class="btn btn-default btn-flat">Profile</a>--%>
+                    <asp:Label ID="lbl_logtype" runat="server" Text=""></asp:Label>
+                </div>
+                <div class="pull-right">
+                 <%-- <a href="../adminlogin.aspx" class="btn btn-default btn-flat">Sign out</a>--%>
+                  <asp:LinkButton ID="lnkb_logout" runat="server"  class="btn btn-default btn-flat" onclick="lnkb_logout1_Click">Sign out</asp:LinkButton>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <!-- Control Sidebar Toggle Button -->
+        
+        </ul>
+      </div>
+    </nav>
+  </header>
+  
+  <%--<div class="navbar-custom-menu">
+         <ul class="nav navbar-nav">
+          
+          <li class="dropdown notifications-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+         Notifications <i class="fa fa-bell-o"></i>
+              <span class="label label-warning notifi-blk">2</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">You have 2 notifications</li>
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 200px;">
+				<ul class="menu" style="overflow: hidden; width: 100%; height: 200px;">
+                      <li>
+                    <a href="#">
+                      <i class="fa fa-phone text-aqua"></i> 10 Missed Calls
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-warning text-yellow"></i> 5 Reminders
+                    </a>
+                  </li>
+
+                </ul>
+				<div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 3px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px;"></div><div class="slimScrollRail" style="width: 3px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
+              </li>
+              <li class="footer"><a href="#">View all</a></li>
+            </ul>
+          </li>
+          
+        
+        </ul>
+      </div>--%>
+
+  <aside class="main-sidebar">
+ 
+
+    <section class="sidebar">
+
+
+    <ul class="sidebar-menu">
+        <li class="header">MAIN NAVIGATION</li>
+         <li class="treeview"> <a href="dashboard.aspx"> <i class="fa fa-dashboard"></i> <span>Dashboard </span> </a> </li>
+         <li class="treeview"> <a href=""> <i class="fa fa-bars"></i> <span>News & Events</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
+          <ul class="treeview-menu">
+              <li class="treeview"> <a href="add_news.aspx"> <i class="fa fa-circle-o"></i> <span>Add news </span> </a> </li>
+             <li class="treeview"> <a href="view_news.aspx"> <i class="fa fa-circle-o"></i> <span>View news </span> </a> </li>
+             <li class="treeview"> <a href="add_achievements.aspx"> <i class="fa fa-circle-o"></i> <span>Add Achivements </span> </a> </li>
+             <li class="treeview"> <a href="view_achievements.aspx"> <i class="fa fa-circle-o"></i> <span>View  Achivements</span> </a> </li>
+             <li class="treeview"> <a href="add_departments.aspx"> <i class="fa fa-circle-o"></i> <span>Add departments </span> </a> </li>
+             <li class="treeview"> <a href="view_departments.aspx"> <i class="fa fa-circle-o"></i> <span>View departments </span> </a> </li>
+             <li class="treeview"> <a href="add_flashnews.aspx"> <i class="fa fa-circle-o"></i> <span>Add flash news </span> </a> </li>
+             <li class="treeview"> <a href="view_flashnews.aspx"> <i class="fa fa-circle-o"></i> <span>View flash news </span> </a> </li>
+         </ul>
+        </li>
+        <li class="treeview"> <a href=""> <i class="fa fa-bars"></i> <span>Staff</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
+          <ul class="treeview-menu">
+             <li class="treeview"> <a href="add_staff.aspx"> <i class="fa fa-circle-o"></i> <span>Add staff </span> </a> </li>
+             <li class="treeview"> <a href="view_staff.aspx"> <i class="fa fa-circle-o"></i> <span>View staff </span> </a> </li>
+         </ul>
+        </li>
+        <li class="treeview"> <a href=""> <i class="fa fa-bars"></i> <span>Research project</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
+          <ul class="treeview-menu">
+             <li class="treeview"> <a href="add_research_project.aspx"> <i class="fa fa-circle-o"></i> <span>Add research project </span> </a> </li>
+             <li class="treeview"> <a href="view_research_project.aspx"> <i class="fa fa-circle-o"></i> <span>View research project </span> </a> </li>
+         </ul>
+        </li>
+        <li class="treeview"> <a href=""> <i class="fa fa-bars"></i> <span>Gallery</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
+          <ul class="treeview-menu">
+             <li class="treeview"> <a href="add_album.aspx"> <i class="fa fa-circle-o"></i> <span>Add gallery </span> </a> </li>
+             <li class="treeview"> <a href="view_album.aspx"> <i class="fa fa-circle-o"></i> <span>View gallery </span> </a> </li>
+         </ul>
+        </li>
+        <li class="treeview"> <a href=""> <i class="fa fa-bars"></i> <span>Master settings</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
+          <ul class="treeview-menu">
+              <li><a href="academiccells.aspx"><i class="fa fa-circle-o"></i>Academic cells</a></li>
+              <li><a href="fees.aspx"><i class="fa fa-circle-o"></i>Fees</a></li>
+              <li><a href="rules.aspx"><i class="fa fa-circle-o"></i>Rules</a></li>
+              <li><a href="procedure.aspx"><i class="fa fa-circle-o"></i>Procedure</a></li>
+              <li><a href="downloads.aspx"><i class="fa fa-circle-o"></i>Downloads</a></li>
+              <li><a href="changepassword.aspx"><i class="fa fa-circle-o"></i>Change Password</a></li>
+          </ul>
+          
+        </li>
+        <li>
+         <asp:LinkButton ID="lnkb_logout1" runat="server"  onclick="lnkb_logout1_Click"><i class="fa fa-power-off"></i>Sign out</asp:LinkButton>
+        </li>
+
+
+      </ul>
+
+
+    </section>
+
+  </aside>
+
+  
+  
+  
+ <!---------------------------------------------------------------------------------------------------------------------------------------->  
+
+  <div class="content-wrapper">
+  
+  <section>
+  
+   <ol class="breadcrumb">
+        <li><a href="dashboard.aspx"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active"><asp:Label ID="lblheading" runat="server"></asp:Label></li>
+      </ol>
+  </section>
+    <!-- Content Header (Page header) -->
+
+
+<section class="content" style="min-height:0px;">
+          
+             <asp:Label ID="lblmsg" runat="server" Text=""></asp:Label>
+             </section>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+        
+        </div>  
+        
+ <!---------------------------------------------------------------------------------------------------------------------------------------->
+  <footer class="main-footer ">
+    <div class="pull-right hidden-xs">
+      Powered by <a href="http://gitonline.in" target="_blank">Global Innovative Technologies</a>.
+    </div>
+    <strong>Copyright &copy; 2017 All rights reserved by GPMGC. </strong> 
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Create the tabs -->
+    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+      <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+      <div class="tab-pane" id="control-sidebar-home-tab">
+        <h3 class="control-sidebar-heading">Recent Activity</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                <p>Will be 23 on April 24th</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-user bg-yellow"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+
+                <p>New phone +1(800)555-1234</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+
+                <p>nora@example.com</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+
+                <p>Execution time 5 seconds</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
+        <h3 class="control-sidebar-heading">Tasks Progress</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Custom Template Design
+                <span class="label label-danger pull-right">70%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Update Resume
+                <span class="label label-success pull-right">95%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Laravel Integration
+                <span class="label label-warning pull-right">50%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Back End Framework
+                <span class="label label-primary pull-right">68%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
+      </div>
+      <!-- /.tab-pane -->
+      <!-- Stats tab content -->
+      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+      <!-- /.tab-pane -->
+      <!-- Settings tab content -->
+      <div class="tab-pane" id="control-sidebar-settings-tab">
+        <form method="post">
+          <h3 class="control-sidebar-heading">General Settings</h3>
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Report panel usage
+              <input type="checkbox" class="pull-right" checked>
+            </label>
+
+            <p>
+              Some information about this general settings option
+            </p>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Allow mail redirect
+              <input type="checkbox" class="pull-right" checked>
+            </label>
+
+            <p>
+              Other sets of options are available
+            </p>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Expose author name in posts
+              <input type="checkbox" class="pull-right" checked>
+            </label>
+
+            <p>
+              Allow the user to show his name in blog posts
+            </p>
+          </div>
+          <!-- /.form-group -->
+
+          <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Show me as online
+              <input type="checkbox" class="pull-right" checked>
+            </label>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Turn off notifications
+              <input type="checkbox" class="pull-right">
+            </label>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Delete chat history
+              <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+            </label>
+          </div>
+          <!-- /.form-group -->
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+  </aside>
+        
+     </div>   
+     
+  </form>
+
+    
+    <link rel="stylesheet" href="../design/css/validationEngine.jquery.css" type="text/css"/>
+	<script src="../design/js/jquery-1.8.2.min.js" type="text/javascript"></script>
+    <script type='text/javascript'>
+        var $jq = jQuery.noConflict();    
+    </script>
+	<script src="../design/js/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8">
+	</script>
+	<script src="../design/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8">
+	</script>
+	<script type="text/javascript">
+	    $jq(document).ready(function () {
+	        $jq("#form1").validationEngine();
+	        $jq("#aspnetForm").validationEngine();
+	    });
+    </script>
+</body>
+</html>
